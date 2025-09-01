@@ -8,3 +8,14 @@ In my spare time, I enjoy attending Toastmasters meetings, playing soccer, and r
 My academic training has equipped me with expertise in Forecasting, Bayesian Statistics, Time Series Analysis, Panel Data Modelling, and Non-linear Regression. I am proficient in Matlab, R, and Python, and I use these tools to compute and implement statistical models.
 
 **Masters Thesis: Misspecification in Gaussian Graphical Models - Current**
+My thesis is focused on understanding errors in how we model relationships between different variables, using a method called Gaussian Graphical Models (GGMs).
+
+At the heart of this, I’m working with Bayesian networks that show how variables are related to each other. These relationships are represented as "edges" or connections in the network. Normally, GGMs assume that the data follows a smooth, bell-shaped Normal distribution. These models are useful for understanding the conditional relationships between variables — meaning, how one variable is connected to another when you account for all the others.
+
+The main question I'm exploring is: What happens if the data we're working with doesn't exactly follow the ideal Gaussian distribution?
+
+In simple terms, I’m investigating how the model can still reliably tell us whether a connection between two variables is real, even when the data doesn’t perfectly match our assumptions. To do this, I use a particular kind of Prior distribution which allows me to increase or decrease the number of edges to fully understand the true picture.
+
+So, overall, my work helps understand the accuracy of these models, especially when the data doesn’t fit the typical smooth patterns one expects. I am also exploring methods on how to convert any empirical distribution to have properties of a normal distribution for the models concerned.
+
+Thesis Proposal Presentation Link: Breaking a Gaussian Graphical Model.pdf
