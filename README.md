@@ -18,4 +18,4 @@ In simple terms, I’m investigating how the model can still reliably tell us wh
 
 So, overall, my work helps understand the accuracy of these models, especially when the data doesn’t fit the typical smooth patterns one expects. I am also exploring methods on how to convert any empirical distribution to have properties of a normal distribution for the models concerned.
 
-Thesis Proposal Presentation Link: Breaking a Gaussian Graphical Model.pdf
+Thesis Proposal Presentation Link: [Breaking a Gaussian Graphical Model.pdf](https://github.com/mashaalyusufi02/mashaalyusufi02/raw/main/Breaking a Gaussian Graphical Model.pdf)
