@@ -1,9 +1,9 @@
 👨🏻‍💻 About Me
 I am currently pursuing a Master of Applied Econometrics at Monash University (expected graduation: December 2025). My thesis focuses on the Misspecification in Gaussian Graphical Models. 🎯 I'm passionate about working in a job where I can use statistical methods to solve problems in social, Economic, Environmental, and even Energy.
 🎓 Professional Background
-Previously worked as an SAP Functional Consultant at a consultancy in Pakistan that supported commercial banks in implementing SAP On-Premise and Cloud products.
-Provided support services to Habib Bank Limited (HBL) to promote mobile banking in rural areas in Pakistan.
-Contributed to the implementation of:
+• Previously worked as an SAP Functional Consultant at a consultancy in Pakistan that supported commercial banks in implementing SAP On-Premise and Cloud products.
+• Provided support services to Habib Bank Limited (HBL) to promote mobile banking in rural areas in Pakistan.
+• Contributed to the implementation of:
 A/B testing for business decisions.
 Predictive Modelling solutions for banking services.
 📌 Interests
@@ -27,9 +27,9 @@ The main question I'm exploring is: What happens if the data we're working with 
 •	Number of observations (n): 1000
 •	Bayesian Prior: Spike and Slab Prior
 •	Bayesian Likelihood:
-o	Gaussian distribution (mean = 0, variance = 1) under True conditions
-o	Misspecified Distribution 1: t-distribution (df = 5), mean = 0, variance = 1
-o	Misspecified Distribution 2: t-distribution (df = 3), mean = 0, variance = 1
+  o	Gaussian distribution (mean = 0, variance = 1) under True conditions
+  o	Misspecified Distribution 1: t-distribution (df = 5), mean = 0, variance = 1
+  o	Misspecified Distribution 2: t-distribution (df = 3), mean = 0, variance = 1
 •	Red lines in histogram: Represent the Maximum Likelihood Point Estimate
 •	Tables: Marginal Posterior Estimates of the off-diagonals of a Precision Matrix and Diagonals
 🔍 Key Finding
