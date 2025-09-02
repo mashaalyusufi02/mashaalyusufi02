@@ -19,3 +19,14 @@ In simple terms, I’m investigating how the model can still reliably tell us wh
 So, overall, my work helps understand the accuracy of these models, especially when the data doesn’t fit the typical smooth patterns one expects. I am also exploring methods on how to convert any empirical distribution to have properties of a normal distribution for the models concerned.
 
 Thesis Proposal Presentation Link: [Breaking a Gaussian Graphical Model.pdf](https://github.com/mashaalyusufi02/mashaalyusufi02/raw/main/Breaking%20a%20Gaussian%20Graphical%20Model.pdf)
+
+Key details about Proposal Presentation Experiments:
+Number of variables 'p' = 3
+Number of Observations 'n' = 1000
+Bayesian Posterior Distribution Computed. 
+Bayesian Prior Used: Spike and Slab Prior
+Red Lines in Histogram: Maximum Likelihood Point Estimate
+data: True distribution of data is Normal (Gaussian). This data has mean=0 and variance=1
+Misspecified distribution: t-distribution with 5 degrees of freedom, mean=0 and variance=1, t-distribution with 3 degrees of freedom, mean=0, and variance=1
+Key finding: Under a highly sparse Precision Matrix, increasing model misspecification tends to cause the likelihood estimates and marginal posterior probabilities to diverge more significantly from their true values.
+
