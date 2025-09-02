@@ -19,7 +19,8 @@ Topics covered in my Master’s program:
 •	Non-linear Regression
 •	Tools and programming languages: (1) Matlab (2) R (3) Python
 ## 📊 Thesis Proposal Presentation Link: 
-Breaking a Gaussian Graphical Model.pdf
+[Breaking a Gaussian Graphical Model ](https://github.com/mashaalyusufi02/mashaalyusufi02/blob/main/Breaking%20a%20Gaussian%20Graphical%20Model.pdf)
+
 ## 📊 Thesis Proposal Description My thesis is focused on understanding errors in how we model relationships between different variables, using a method called Gaussian Graphical Models (GGMs).
 At the heart of this, I’m working with Bayesian networks that show how variables are related to each other. These relationships are represented as "edges" or connections in the network. Normally, GGMs assume that the data follows a smooth, bell-shaped Normal distribution. These models are useful for understanding the conditional relationships between variables — meaning, how one variable is connected to another when you account for all the others.
 The main question I'm exploring is: What happens if the data we're working with doesn't exactly follow the ideal Gaussian distribution?
