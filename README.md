@@ -1,32 +1,38 @@
-**About Me**
-I am currently pursuing a Master of Applied Econometrics at Monash University (expected graduation: December 2025). My thesis focuses on the Misspecification of Graphical Models.
-
-Before beginning my Master’s, I worked as an SAP Functional Consultant at a consultancy in Pakistan, where I helped commercial banks implement SAP On-Premise and Cloud products. I provided support services to Habib Bank Limited (HBL) and contributed to the implementation of A/B testing and Predictive Modelling solutions for bankers. This experience sparked my decision to pursue a Master’s degree, as I became increasingly interested in the application of statistical models in business contexts.
-
-In my spare time, I enjoy attending Toastmasters meetings, playing soccer, and reading.
-
-My academic training has equipped me with expertise in Forecasting, Bayesian Statistics, Time Series Analysis, Panel Data Modelling, and Non-linear Regression. I am proficient in Matlab, R, and Python, and I use these tools to compute and implement statistical models.
-
-**Masters Thesis: Misspecification in Gaussian Graphical Models - Current**
-My thesis is focused on understanding errors in how we model relationships between different variables, using a method called Gaussian Graphical Models (GGMs).
-
+👨🏻‍💻 About Me
+I am currently pursuing a Master of Applied Econometrics at Monash University (expected graduation: December 2025). My thesis focuses on the Misspecification in Gaussian Graphical Models. 🎯 I'm passionate about working in a job where I can use statistical methods to solve problems in social, Economic, Environmental, and even Energy.
+🎓 Professional Background
+Previously worked as an SAP Functional Consultant at a consultancy in Pakistan that supported commercial banks in implementing SAP On-Premise and Cloud products.
+Provided support services to Habib Bank Limited (HBL) to promote mobile banking in rural areas in Pakistan.
+Contributed to the implementation of:
+A/B testing for business decisions.
+Predictive Modelling solutions for banking services.
+📌 Interests
+Attending Toastmasters meetings
+Playing soccer
+Reading nonfiction (currently reading 'Diary of a Combatant') and fiction
+📚 Technical Skills & Coursework
+Topics covered in my Master’s program:
+•	Forecasting
+•	Bayesian Statistics
+•	Time Series Models
+•	Panel Data Modelling
+•	Non-linear Regression
+•	Tools and programming languages: (1) Matlab (2) R (3) Python
+📊 Thesis Proposal Presentation Link: Breaking a Gaussian Graphical Model.pdf
+📊 Thesis Proposal Description My thesis is focused on understanding errors in how we model relationships between different variables, using a method called Gaussian Graphical Models (GGMs).
 At the heart of this, I’m working with Bayesian networks that show how variables are related to each other. These relationships are represented as "edges" or connections in the network. Normally, GGMs assume that the data follows a smooth, bell-shaped Normal distribution. These models are useful for understanding the conditional relationships between variables — meaning, how one variable is connected to another when you account for all the others.
-
 The main question I'm exploring is: What happens if the data we're working with doesn't exactly follow the ideal Gaussian distribution?
+🧪 Experiment Details
+•	Number of variables (p): 3
+•	Number of observations (n): 1000
+•	Bayesian Prior: Spike and Slab Prior
+•	Bayesian Likelihood:
+o	Gaussian distribution (mean = 0, variance = 1) under True conditions
+o	Misspecified Distribution 1: t-distribution (df = 5), mean = 0, variance = 1
+o	Misspecified Distribution 2: t-distribution (df = 3), mean = 0, variance = 1
+•	Red lines in histogram: Represent the Maximum Likelihood Point Estimate
+•	Tables: Marginal Posterior Estimates of the off-diagonals of a Precision Matrix and Diagonals
+🔍 Key Finding
+Under a highly sparse Precision Matrix, increasing model misspecification tends to cause the likelihood estimates and marginal posterior probabilities to diverge more significantly from their true values.
 
-In simple terms, I’m investigating how the model can still reliably tell us whether a connection between two variables is real, even when the data doesn’t perfectly match our assumptions. To do this, I use a particular kind of Prior distribution which allows me to increase or decrease the number of edges to fully understand the true picture.
-
-So, overall, my work helps understand the accuracy of these models, especially when the data doesn’t fit the typical smooth patterns one expects. I am also exploring methods on how to convert any empirical distribution to have properties of a normal distribution for the models concerned.
-
-Thesis Proposal Presentation Link: [Breaking a Gaussian Graphical Model.pdf](https://github.com/mashaalyusufi02/mashaalyusufi02/raw/main/Breaking%20a%20Gaussian%20Graphical%20Model.pdf)
-
-Key details about Proposal Presentation Experiments:
-Number of variables 'p' = 3
-Number of Observations 'n' = 1000
-Bayesian Posterior Distribution Computed. 
-Bayesian Prior Used: Spike and Slab Prior
-Red Lines in Histogram: Maximum Likelihood Point Estimate
-data: True distribution of data is Normal (Gaussian). This data has mean=0 and variance=1
-Misspecified distribution: t-distribution with 5 degrees of freedom, mean=0 and variance=1, t-distribution with 3 degrees of freedom, mean=0, and variance=1
-Key finding: Under a highly sparse Precision Matrix, increasing model misspecification tends to cause the likelihood estimates and marginal posterior probabilities to diverge more significantly from their true values.
 
