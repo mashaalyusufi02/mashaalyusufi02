@@ -12,12 +12,13 @@
 <br> Playing soccer</br> 
 <br> Reading nonfiction (currently reading 'Diary of a Combatant') and fiction</br> 
 ## 📚 Technical Skills & Coursework
-### Topics covered in my Master’s program
-<br>Forecasting</br>
-<br>Bayesian Statistics</br>
-<br>Time Series Models</br>
-<br>Panel Data Modelling</br>
-<br>Non-linear Regression</br>
+### Some Topics covered in my Master’s program
+<br>ETC5550 Applied Forecasting</br>
+<br>ETC5410 Bayesian Inference and Data Analysis</br>
+<br>ETC5340 Principles of Econometrics</br>
+<br>ETF5600 Quantitatative Analysis of Limited Dependent Variables</br>
+<br>ETC5346 Financial Econometrics</br>
+<br>ETX5460 Advanced Financial Econometrics</br>
 ### Tools and programming languages 
 <br>Matlab</br>  
 <br>R</br>  
