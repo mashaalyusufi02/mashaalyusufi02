@@ -1,0 +1,288 @@
+---
+title: "34263594_Assign_2"
+output: html_document
+date: "`r Sys.Date()`"
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(fpp3)
+library(readxl)
+library(distributional)
+get_my_data <- function(student_id) {
+  set.seed(student_id)
+  all_data <- readr::read_rds("https://bit.ly/monashretaildata")
+  while(TRUE) {
+    retail <- filter(all_data, `Series ID` == sample(`Series ID`, 1))
+    if(!any(is.na(fill_gaps(retail)$Turnover))) return(retail)
+  }
+}
+# Replace the argument with your student ID
+retail <- get_my_data(34263594)
+```
+A discussion of the statistical features of the original data, including the effect of COVID-19 on your series. [4 marks]
+
+
+This report consists of an analysis of the monthly sale of retail goods sold in Northern Territory between April 1988 to December 2022 and classified by the Australian Bureau of Statistics (ABS) as “other recreational goods”. This classification includes Sports and Camping Equipment, entertainment, media, toys, and games.  Two key features of this series can be distinguished from it’s time plot titled ‘Retail Turnover Northern Territory’. It’s variation increases with the levels post 2008 particularly during COVID-19 and that sales increase exponentially between 2000 and 2010. 
+To elaborate on variance, post 2008, sales fluctuate between AUD 3 million and  AUD 9.5 million compared to fluctuating between AUD 0.5 million and 2.5 million pre-2008. Notable features attributed to the COVID-19 period are spikes in sales exceeding AUD 10 million during Winter (July) and reaching AUD 10 million in Summer (December). The monthly seasonal and subseries plots confirm this
+
+
+
+```{r}
+retail |> autoplot(Turnover) + labs(title = "Retail Turnover Northern Territory (Apr 1982- Dec 2022)", subtitle = "Other Recreational Goods", y = "Turonver AUD millions")
+```
+
+
+
+```{r}
+
+retail |> gg_season(Turnover) +labs(y="millions", title="Retail Turnover NT")
+
+```
+
+
+
+```{r}
+retail |> gg_subseries(Turnover) + labs(y = "AUD millions", title="Retail Turnover by Month")
+```
+
+
+```{r}
+retail |> autoplot(box_cox(Turnover, lambda = -0.4)) + labs(y = "Transformed Scale (Lambda = -0.4)", title="Box Cox Transformation (Lambda = -0.4) of Retail Turnover NT (Apr 1988-Dec 2022)")
+                   
+
+retail|> autoplot(box_cox(Turnover, lambda = 0.25)) + labs(y = "Transformed Scale (Lambda = 0.25)", title="Box Cox Transformation (Lambda = 0.25) of Retail Turnover NT (Apr 1988-Dec 2022)")
+
+
+retail|> autoplot(box_cox(Turnover, lambda = -0.25)) + labs(y = "Transformed Scale (Lambda = -0.25)", title="Box Cox Transformation (Lambda = -0.25) of Retail Turnover NT (Apr 1988-Dec 2022)")
+
+
+retail |> autoplot(box_cox(Turnover, lambda = -0.055)) + labs(y = "Transformed Scale (Lambda = -0.055)", title="Box Cox Transformation (Lambda = -0.055) of Retail Turnover NT (Apr 1988-Dec 2022)")
+```
+
+```{r}
+retail|> autoplot(log(Turnover)) + labs(y = "Log(Turnover)", title="log Transformation of Retail Turnover NT (Apr 1988-Dec 2022)")
+                   
+```
+
+```{r}
+retail |> model(STL(log(Turnover)))|> components() |> gg_season() + labs(y = "Log(Turnover)", title="Monthly Seasonal Plot of Log Transformation of Turnover NT (Apr 1988-Dec 2022)")
+                   
+```
+Explanation of transformations and differencing used. You should use a unit-root test as part of the discussion. [5 marks]
+
+Given the positive relationship between variation and the level of the series, a log transformation of turnover was selected. This transformation contained the variation in the series prior to COVID-19 to a log scale of 0.5 and less than 1 during this period. Box Cox transformations with  negative lambda values created variations larger than a log-scale of 1 in the 1990s and less than 0.25 in later periods and vice-versa for positive log transformations. In other words, the log transformation works best because it contains changes in sales in any given period to less than 50% during pre-COVID19 and less than 100% post-Covid19. The STL decomposition stabilizes the fluctuations in trend and seasonality to remain within a log-scale of 0.4 (change less than 40%). 
+
+The mean of the log transformed series in not time-invariant and displays strong autocorrelation over a sample period of 4 years as evidenced by “gg_tsdisplay(log(Turnover))”. However, taking one regular difference and one seasonal difference of the log transformed retail turnover series stabilizes the mean to oscillate over 0 and reduces autocorrelation as shown over a sample period of 4 years. The KPSS test gives a p-value = 0.1, which indicates that the we fail to reject the null hypothesis that the series is stationary at a 1%, 5%, and 10% significance level.
+
+```{r}
+retail |> model(STL(Turnover))|> components() |> autoplot() + labs(y = "Turnover", title="STL Decomposition -Turnover NT (Apr 1988-Dec 2022)")
+retail |> model(STL(log(Turnover)))|> components() |> autoplot() + labs(y = "Log Turnover", title="STL Decomposition - Log Transformation of Turnover NT (Apr 1988-Dec 2022)")
+retail |> model(STL(box_cox(Turnover, lambda=-0.055)))|> components() |> autoplot() + labs(y = "Box Cox Transformed Scale (Lambda = -0.055)", title="STL Decomposition - BoxCox Transformation of Turnover NT (Apr 1988-Dec 2022)")
+retail |> model(STL(box_cox(Turnover, lambda=-0.4)))|> components() |> autoplot() + labs(y = "Box Cox Transformed Scale (Lambda = -0.4)", title="STL Decomposition- BoxCox Transformation of Turnover NT (Apr 1988-Dec 2022)")
+
+```
+
+
+```{r}
+retail |> gg_tsdisplay(log(Turnover),plot_type = "partial", lag=48) + labs(y = "Log Transformation Scale", title=" Log Transformation of Turnover NT (Apr 1988-Dec 2022)")
+
+retail |> gg_tsdisplay(box_cox(Turnover,lambda=-0.4),plot_type = "partial", lag=48) + labs(y = "Box Cox Transformation Scale Lambda = -0.4", title="Box Cox Transformation of Turnover NT (Apr 1988-Dec 2022)")
+```
+```{r}
+
+retail |> gg_tsdisplay(difference(log(Turnover),12) |> difference(),
+                       plot_type = "partial",lag=48) + labs(title="Log Transformation Turnover - NT (Apr 1988-Dec 2022)")
+
+```
+
+```{r}
+retail |> features(
+  difference(log(Turnover),12) |> difference(),
+  unitroot_kpss
+)
+```
+A description of the methodology used to create a short-list of appropriate ARIMA models and ETS models. Include discussion of AIC values as well as results from applying the models to a test-set consisting of the last 24 months of the data provided. [6 marks]
+
+The 4 Seasonal Arima models with no constant chosen were: ARIMA(1,1,0)(2,1,0)_{12}, ARIMA(0,1,1)(0,1,1)_{12},ARIMA(1,1,1)(1,1,1)_{12}, and the Automatic ARIMA model. The 5 ETS models chosen were ETS(MAM),ETS(M,N,M), ETS(M,Ad,M), ETS(M,Ad,A), and ETS(A,Ad,A). The AICc for the ARIMA(1,1,1)(1,1,1)_{12} was the smallest at -648.49 while it was -592,-642, and -646 for other models. However, the smallest RMSE came from the ARIMA(1,1,0)(2,1,0)_{12} and ETS(M,Ad,A) model of 0.827 and 1.25 respectively.
+
+AICc = AIC + [2(p+q+1)(p+q+2)/(T-p-q-2)]. The AICc for the best ARIMA model can be explained by examining the PACF and the ACF of doubly differenced log transformation of the Turnover series. ‘Doubly differenced’ refers to taking 1 seasonal difference setting lag 12 and 1 ordinary difference. In the PACF, the last significant seasonal lag is 36, that corresponds to seasonal lag 3 or AR(3) process. However, this barely exceeds the critical value, and hence capturing the effect of lag 24 that corresponds to seasonal lag 2 or AR(2). The ACF of the doubly differenced series show significant lags slowly decaying suggesting that a MA(q) component is likely to be unreliable. 
+
+The best ETS Models ETS(M,Ad,A) was selected by examining the STL decomposition of the Retail Turnover Series. The seasonal component displays fluctuations contained on a log scale of 1 and span a log scale of 3 during the COVID years. The trend is smooth prior to the COVID years and reaches goes through patterns of a local maximum and local minimum. Multiplicative errors can be justified through the time series of the log transformation which displays several minute fluctuations throughout every period showing some randomness that needed to be captured. 
+
+Applying the models to a test set of monthly retail data between Jan 2021 to Dec 2022 showed that ARIMA models had RMSE’s between 0.8-1.4 while the ETS models had RMSE’s between 1.25 and 1.75. A diverse combination of ETS models chosen with Additive and Multiplicative Seasonality and No trend, Damped Trend, and Additive Trend account for this variation. ETS Models with Multiplicative Seasonality performed worse than those with Additive Seasonality. This can be explained by contextualizing the data provided. Erratic changes in Consumer behaviour throughout the year would likely cause multiplicative seasonal patterns. Other recreational goods are not necessities would see peaks in demand once or twice throughout the year as the seasonal plots confirm sale increases in Summer and Winter.
+
+
+
+```{r}
+train <- retail |> filter_index(. ~ "2020 Dec")
+
+```
+
+```{r}
+fit <- train |>
+  model(
+    arima210110 = ARIMA(log(Turnover) ~ 0 + pdq(1,1,0) + PDQ(2,1,0)),
+    arima011011 = ARIMA(log(Turnover) ~ 0+ pdq(0,1,1) + PDQ(0,1,1)),
+    arima111111 = ARIMA(log(Turnover) ~ 0+ pdq(1,1,1) + PDQ(1,1,1)),
+    auto = ARIMA(log(Turnover),stepwise = FALSE, approx = FALSE),
+    ets_m01 = ETS(Turnover ~ error("M") + trend("A") + season("M")),
+    ets_m02 = ETS(Turnover ~ error("M") + trend("N") + season("M")),
+    ets_m03 = ETS(Turnover ~ error("M") + trend("Ad") + season("M")),
+    ets_m04 = ETS(Turnover ~ error("M") + trend("Ad") + season("M")),
+    ets_m05 = ETS(Turnover ~ error("M") + trend("Ad") + season("A")),
+    ets_m06 = ETS(Turnover ~ error("A") + trend("Ad") + season("A")),
+    
+  )
+tidy(fit)
+glance(fit)
+
+
+fit |>
+  forecast(h = 24) |>
+  accuracy(retail)
+
+```
+
+Parameter Estimates:
+For the chosen ETS (M,Ad,A) model, the parameter esitmates are:
+Alpha = 0.406, beta = 0.0021, gamma = 0.188, phi = 0.905
+
+Based on these estimates, approximately 40% of weight is given to the COVID period. The level and seasonality in the series both change slowly with time.
+
+For the chosen ARIMA (2,1,0)(1,1,0) model, the parameter estimates are:
+Ar(1) = -0.3149, seasonal AR(1) = -0.608, seasonal AR(2) = -0.274
+The ARIMA parameters suggest that this model is relatively stationary for AR(1) and AR(2) components. Given that there is no constant, it is expected that the point forecasts will converge to a non-zero vale.
+
+	
+Residual Diagnostics:
+Autocorrelation (ACF & PACF) and Residual Distribution:
+The residuals of both models seem to be approximately zero, suggesting point forecasts may be unbiased. The ACF of both models suggest very little autocorrelation is left in the residuals and hence the forecasts may give accurate forecasts
+
+ARIMA(1,1,0)(2,1,0)_{12} model still has it’s last significant lag at lag=36 while most other lags seem to suggest white noise. ETS(M, Ad, A) last significant lag is at lag=6 suggesting there may not be much information left to compute the forecasts.
+
+Ljungbox Test:
+The p-value of the Ljung Box test of the transformed residuals of the ARIMA model ARIMA(1,1,0)(2,1,0)_{12} gives a p-value of 0.025 and 0.0085 for the ETS(M, Ad, A) model.  The ARIMA residuals are white noise at a 1% significance level but unlikely to be at 5% or 10%. The ETS residuals are White Noise at 1% and 5% but not at a 10% significance level. 
+Forecasts
+Both forecast distributions suggest sales will dip in January an November while increasing during other months throughout the year. The ARIMA model suggests September and October will also see low sales. The monthly forecast distribution of the point forecasts for the ARIMA(1,1,0)(2,1,0)_{12} model cover a larger range of values than the ETS(M, Ad, A) distribution. This ranges between AUD 4.5 million and AUD 10.3 million between 2021-2022 whereas the point forecasts range between AUD 5.3 million to AUD 8.4 million.
+
+Prediction Intervals:
+Extremely wide prediction intervals are the consequence of both models. The ETS model produces a prediction interval for sales between AUD 3 million and AUD 10 million while ARIMA models
+Interval is between AUD 4.5 million to AUD 25 million at a 95% confidence interval.
+
+
+
+```{r}
+fit |>
+  forecast(h = 24) |>
+  filter(.model == "ets_m05") |>
+  autoplot(train) + labs(y = "Turnover", title = "ETS(M,Ad,A) Model")
+
+
+fit |>
+  forecast(h = 24) |>
+  filter(.model == "arima210110") |>
+  autoplot(train)+ labs(y = "Turnover", title = "ARIMA(2,1,0)(1,1,0) Model")
+
+fit |> forecast(h=24) |> filter(.model == "ets_m05") |> hilo()
+fit |> forecast(h=24)|> filter(.model == "arima210110")  |> hilo()
+
+
+
+```
+
+```{r}
+fit |> select(ets_m05) |> gg_tsresiduals(lag_max = 36) + labs(title = "ETS(M,Ad,A) Model (Monthly Retail Turnover)")
+fit |> select(arima210110) |> gg_tsresiduals(lag_max = 36) + labs(title = "ARIMA(2,1,0)(1,1,0) Model (Monthly Retail Turnover)")
+```
+
+```{r}
+augment(fit) |> filter(.model == "ets_m05")|> features(.innov, ljung_box, lag = 36)
+augment(fit) |> filter(.model == "arima210110")|> features(.innov, ljung_box, lag = 36, dof=3)
+```
+
+
+Comparison of Preferred Model Results (Test Set):
+
+The preferred ARIMA model has a smaller MAE and RMSE than the preferred ETS model suggesting it produces more accurate forecasts of median and mean retail turnover. The histogram of residuals of each models confirms this analysis as the ARIMA residual distribution is symmetric whereas the ETS one is more right-tailed. 
+
+
+```{r}
+read_abs <- readxl::read_excel("8501011.xlsx",sheet= "Data1",skip = 81)
+read_abs_1 <- read_abs[-c(2:140)]
+read_abs_2 <- read_abs_1 |> select(`32203`,...141) |> mutate(Month=`32203`, Turnover = ...141) |> mutate(Month = yearmonth(Month))
+read_abs_final <- read_abs_2 |> select(Month,Turnover) |> as_tsibble()
+```
+
+
+```{r}
+fulldatafit <- retail |>
+  model(
+    arima210110_v1 = ARIMA(log(Turnover) ~ 0 + pdq(1,1,0) + PDQ(2,1,0)),
+    ets_m05_v1 = ETS(Turnover ~ error("M") + trend("Ad") + season("A"))
+  ) 
+```
+
+
+```{r}
+fulldatafit |>
+  forecast(h = 24) |>
+  filter(.model == "ets_m05_v1") |>
+  autoplot(retail, level=80)+labs(title="ETS(M,Ad,A) Model", y="Turnover")
+
+
+fulldatafit |>
+  forecast(h = 24) |>
+  filter(.model == "arima210110_v1") |>
+  autoplot(retail,level=80)+labs(title="ARIMA(2,1,0)(1,1,0) Model", y="Turnover")
+
+fulldatafit |> forecast(h=24) |> filter(.model == "ets_m05_v1") |> hilo()
+fulldatafit |> forecast(h=24)|> filter(.model == "arima210110_v1")  |> hilo()
+
+
+
+```
+Obtain up-to-date data from the ABS website (Table 11). You may need to use the previous release of data, rather than the latest release. Compare your forecasts with the actual numbers. How well did you do? [5 marks]
+
+
+(ABS Training Set: Data till December 2022, Test Set: Jan 2023-Feb 2024)
+Prediction Intervals 
+Referencing both test sets for an 80% confidence interval, the prediction intervals for the ETS models were smaller than that of the ARIMA models. Referencing retail data till 2022, ETS prediction intervals span AUD 3.75 million to AUD 10 million. However for retail data till 2024, they span AUD 4 million to 11.25 million. In other words, ETS models slightly underestimated the data. ARIMA models show prediction intervals that span AUD 4 million to 17.5 million for both series. The RMSE’s for the ARIMA models for the ABS data set are higher at 1.5 compared to 0.827 for data till 2022. The RMSE’s for the ETS models are lower for the ABS data as 0.845 compared to 1.25.
+
+
+```{r}
+fulldatafit |>  forecast(h=24)|> filter(.model == "ets_m05_v1")|> mutate(
+  med = median(Turnover),
+  var = distributional::variance(Turnover),
+)
+
+fulldatafit |>  forecast(h=24)|> filter(.model == "arima210110_v1")|> mutate(
+  med = median(Turnover),
+  var = distributional::variance(Turnover),
+)
+
+```
+A discussion of benefits and limitations of the models for your data. [3 marks]
+A potential benefit of the both models is that the histogram of the residual display a mean of 0 which mean the point forecasts are unlikely be biased. 
+
+A potential benefit of using the ETS model is that the sales data for this sample periods is positive and hence models assuming multiplicative errors doesn’t affect the accuracy of the forecast. Furthermore, the alpha of the chosen model suggests that the model captures the seasonal fluctuations during the COVID period effectively in the errors.
+A potential limitation of the ARIMA model is that it is non-stationary at some significance levels according to the KPSS test but not all which means the data may be nonstationary affecting the accuracy of the prediction intervals.
+An additional limitation for the ARIMA model is that being unable to account for the MA terms in the seasonal ARIMA model indicates invertibility is not accounted for.
+
+
+
+
+```{r}
+fulldatafit |> forecast(h=24) |> accuracy(read_abs_final)
+```
