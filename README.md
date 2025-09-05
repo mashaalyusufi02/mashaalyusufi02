@@ -42,4 +42,6 @@ The main question I'm exploring is: What happens if the data we're working with 
 ## 🔍 Key Finding in Proposal
 Under a highly sparse Precision Matrix, increasing model misspecification tends to cause the likelihood estimates and marginal posterior probabilities to diverge more significantly from their true values.
 
+## Other University Projects with Programming Samples
+
 
