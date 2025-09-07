@@ -7,10 +7,6 @@
 <br>Contributed to the implementation of:
 <br>(1) A/B testing for business decisions.</br> 
 <br>(2) Predictive Modelling solutions for banking services.</br> 
-## 📌 Interests
-<br> Attending Toastmasters meetings</br> 
-<br> Playing soccer</br> 
-<br> Reading nonfiction (currently reading 'Diary of a Combatant') and fiction</br> 
 ## 📚 Technical Skills & Coursework
 ### Some Topics covered in my Master’s program
 <br>ETC5550 Applied Forecasting</br>
